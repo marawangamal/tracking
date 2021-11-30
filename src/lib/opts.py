@@ -25,7 +25,7 @@ class opts(object):
                                   'in the exp dir if load_model is empty.')
 
     # videos directory
-    self.parser.add_argument('--videos_dir', type=str
+    self.parser.add_argument('--videos_dir', type=str,
                              help='path to directory containing videos to track')
 
     # system

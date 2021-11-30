@@ -18,7 +18,6 @@ logger.setLevel(logging.INFO)
 import shutil
 
 
-
 def demo(opt, vid_path) -> None:
     """Runs MOT on video file found at `vid_path`
 
@@ -47,18 +46,17 @@ def demo(opt, vid_path) -> None:
     if opt.output_format == 'video':
 
         output_video_path = osp.join(result_root,  vid_name + '.mp4')
-        cmd_str = 'ffmpeg -framerate 30 -i {}/%05d.jpg {}'.format(osp.join(result_root, 'frame'), output_video_path)
+        cmd_str = 'ffmpeg -y -framerate 30 -i {}/%05d.jpg {}'.format(osp.join(result_root, 'frame'), output_video_path)
         os.system(cmd_str)
 
         # Cleanup
         cmd_str = 'rm -rf '.format(osp.join(result_root, 'frame'))
         os.system(cmd_str)
 
-
 if __name__ == '__main__':
 
     opt = opts().init()
-    vid_folder = opts.videos_dir  # path to root containing all videos to track
+    vid_folder = opt.videos_dir  # path to root containing all videos to track
 
     for vid in sorted(os.listdir(vid_folder)):
         if '.mp4' in vid:

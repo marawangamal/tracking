@@ -85,6 +85,7 @@ class LoadImages:  # for inference
 
 class LoadVideo:  # for inference
     def __init__(self, path, img_size=(1088, 608)):
+        self.path = path
         self.cap = cv2.VideoCapture(path)
         self.frame_rate = int(round(self.cap.get(cv2.CAP_PROP_FPS)))
         self.vw = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -111,8 +112,13 @@ class LoadVideo:  # for inference
         self.count += 1
         if self.count == len(self):
             raise StopIteration
+
         # Read image
         res, img0 = self.cap.read()  # BGR
+
+        if not res:
+            raise StopIteration
+
         assert img0 is not None, 'Failed to load frame {:d}'.format(self.count)
         img0 = cv2.resize(img0, (self.w, self.h))
 
